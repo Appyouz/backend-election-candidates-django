@@ -2,7 +2,11 @@
 
 ## Style guide
 
--   https://github.com/HackSoftware/Django-Styleguide is followed wherever possible
+Below guides are used whenever possible. PS: they are useful for any django project, so feel free to explore them
+
+-   https://github.com/HackSoftware/Django-Styleguide
+-   https://danpalmer.me/2018-03-02-scaling-django-codebases/
+-   https://www.youtube.com/@bugbytes3923 (Amazing channel for deep Django concepts)
 
 ## Folder Structure
 
