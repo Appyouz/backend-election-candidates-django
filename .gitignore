@@ -1,0 +1,22 @@
+.history
+.vscode
+# don't ignore static file, only ignore collected static files
+# static
+**/collected_static/
+
+*.pyc
+# dont ignore migrations
+
+**/__pycache__/
+media/
+mediafiles/
+**/log/
+**/logs/
+**/venv/
+**/.venv/
+# collected static files. we've named it as collected_static
+**/staticfiles/
+*.ini
+.env
+.env.prod
+*.sqlite3

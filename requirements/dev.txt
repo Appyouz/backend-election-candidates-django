@@ -1,0 +1,9 @@
+
+-r base.txt
+
+# Development-only dependencies
+django-extensions==3.2.3
+Faker==37.3.0
+factory_boy==3.3.3
+
+gunicorn==23.0.0
