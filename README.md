@@ -8,6 +8,11 @@ Below guides are used whenever possible. PS: they are useful for any django proj
 -   https://danpalmer.me/2018-03-02-scaling-django-codebases/
 -   https://www.youtube.com/@bugbytes3923 (Amazing channel for deep Django concepts)
 
+## Important Things
+
+-   Python 3.11
+-   Postgres is used (version 14.19 is used), but should be compatible with higher versions as well
+
 ## Folder Structure
 
 Inside `backend-election-candidates/`

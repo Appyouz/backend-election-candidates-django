@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to OSNepal!</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333333;
+    }
+
+    .email-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .header img {
+      width: 140px;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      color: #000000;
+      margin: 0;
+    }
+
+    .content {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    .content h2 {
+      font-size: 18px;
+      color: #000000;
+      margin-top: 25px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777777;
+      margin-top: 30px;
+      border-top: 1px solid #eeeeee;
+      padding-top: 15px;
+    }
+
+    .footer a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: #999999;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-container">
+    <div class="header">
+      <h1
+        style="background-color:#000000; padding:20px; text-align:center; color:#ffffff; font-size:20px; font-weight:bold;">
+        Welcome to OSNepal, {{ user.first_name }}!</h1>
+    </div>
+
+    <div class="content">
+      <p>Hi {{ user.first_name }} {{ user.last_name }},</p>
+
+      <p>Welcome to <strong>OSNepal</strong>
+
+      <div class="footer">
+        <p>&copy; {{ current_year }} OSNepal. All rights reserved.</p>
+        <p>If you did not create this account, please delete this account from our system.</p>
+      </div>
+
+      <div class="disclaimer">
+        <p>This is an automated message. Please do not reply.</p>
+      </div>
+    </div>
+</body>
+
+</html>

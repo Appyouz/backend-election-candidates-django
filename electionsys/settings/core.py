@@ -38,15 +38,14 @@ config = get_config(debug=DEBUG)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Now use config to get environment variables
-SECRET_KEY = "django-insecure-k19_+9_d)g^i(x(26$xi0ikx678-x2dusv!(-jiz)$-gdg%vwc"
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [config("DJANGO_ALLOWED_HOST_1"), config("DJANGO_ALLOWED_HOST_2")]
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_DEFAULT_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -55,11 +54,36 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+
+LOCAL_APPS = [
+    "apps.core",
+    "apps.users",
+]
+
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "corsheaders",
+    "safedelete",
+    "django_celery_results",
+    "django_celery_beat",
+]
+
+if DEBUG:
+    THIRD_PARTY_APPS.append("django_extensions")
+
+INSTALLED_APPS = DJANGO_DEFAULT_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
+
 MIDDLEWARE = [
+    # cors middleware
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    # django-currentuser middleware
+    "django_currentuser.middleware.ThreadLocalUserMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -70,7 +94,7 @@ ROOT_URLCONF = "electionsys.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -176,3 +200,72 @@ CORS_EXPOSE_HEADERS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+
+# rest framework settings
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+        "utils.core.permissions.IsSuper",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "EXCEPTION_HANDLER": "utils.core.exception_handler.custom_exception_handler",
+}
+
+# This is needed if we need to send file's url from the backend
+BACKEND_MEDIA_DOMAIN = config("DJANGO_BACKEND_MEDIA_DOMAIN")
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {pathname}:{lineno} {message}",  # Add pathname and lineno,
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        # NOTE: To avoid a log file becoming too large, use a RotatingFileHandler that will rotate the log file when it reaches a certain size.
+        "django_file_rotate": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "django_rotate.log"),
+            "maxBytes": 1024 * 1024 * 10,  # 10 MB
+            "backupCount": 3,  # 3 latest backup files
+            "formatter": "verbose",
+        },
+        "email_submission_handler": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "email_submission.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 3,  # 3 latest backup files
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "django_file_rotate"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        # For future, when we need to send emails
+        "email_submission": {
+            "handlers": ["console", "email_submission_handler"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
