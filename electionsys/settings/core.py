@@ -201,6 +201,8 @@ CORS_EXPOSE_HEADERS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+AUTH_USER_MODEL = "users.User"
+
 
 # rest framework settings
 REST_FRAMEWORK = {

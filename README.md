@@ -17,6 +17,11 @@ Below guides are used whenever possible. PS: they are useful for any django proj
 
 Inside `backend-election-candidates/`
 
+## User model
+
+-   Inherits `django.contrib.auth.models.AbstractBaseUser` and `utils.core.base_models.BaseModel`
+-   Its `CustomBaseUserManager` inherits `django.contrib.auth.models.BaseUserManager` and `safedelete.managers.SafeDeleteManager`
+
 ### apps/
 
 -   `core`
