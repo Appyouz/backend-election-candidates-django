@@ -59,7 +59,7 @@ Inside `backend-election-candidates/`
 
 ### Formatter
 
--   Black is used for formatting (install the vscode extension and enable format on save)
+-   [Black Formatter](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter) is used for formatting (install the vscode extension and enable format on save)
 
 ### soft delete
 
@@ -74,15 +74,6 @@ Inside `backend-election-candidates/`
 ### Commands
 
 -   `python manage.py <command>`
-
-#### seed_data
-
--   see `apps/core/management/commands/seed_data.py`
--   NOTE: `created_by` and `updated_by` will be set to null
-
-#### create_stock_item_if_not_exists
-
--   see `apps/core/management/commands/create_stock_item_if_not_exists.py`
 
 #### setup_server
 
