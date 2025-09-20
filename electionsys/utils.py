@@ -34,7 +34,7 @@ def raise_if_env_not_found(debug: bool):
 
     env_file = ".env" if debug else ".env.prod"
 
-    print(debug, env_file)
+    # print(debug, env_file)
 
     if not os.path.exists(env_file):
         raise FileNotFoundError(
