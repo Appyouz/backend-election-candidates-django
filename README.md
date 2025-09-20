@@ -75,8 +75,17 @@ Inside `backend-election-candidates/`
 
 -   `python manage.py <command>`
 
-#### setup_server
+### setup_server
 
 -   see `apps/core/management/commands/setup_server.py`
 
+### exception handler
+
+-   see `utils/core/exception_handler.py`
+-   handles most of the exceptions so you can directly raise exceptions anywhere and they'll be properly formatted and sent to FE
+
 ### Miscellaneous
+
+#### Postman API Collection
+
+-   https://www.postman.com/grey-water-468124/workspace/open-source-nepal-backend-django
