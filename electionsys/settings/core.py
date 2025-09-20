@@ -58,6 +58,7 @@ DJANGO_DEFAULT_APPS = [
 LOCAL_APPS = [
     "apps.core",
     "apps.users",
+    "apps.political_party",
 ]
 
 THIRD_PARTY_APPS = [
