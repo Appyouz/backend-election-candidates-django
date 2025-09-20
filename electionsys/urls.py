@@ -14,9 +14,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+
+from utils.core.constants import API_V1_PREFIX
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
+    # path('admin/', admin.site.urls),
+    path(f"{API_V1_PREFIX}/political-parties/", include("apps.political_party.urls")),
 ]
