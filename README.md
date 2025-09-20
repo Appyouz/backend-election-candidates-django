@@ -8,6 +8,11 @@ Below guides are used whenever possible. PS: they are useful for any django proj
 -   https://danpalmer.me/2018-03-02-scaling-django-codebases/
 -   https://www.youtube.com/@bugbytes3923 (Amazing channel for deep Django concepts)
 
+## Setup environment
+
+-   Run: `scripts/setup.sh --env <dev|prod> --python_alias <python_command>`
+-   Example: `scripts/setup.sh --env dev --python_alias python`
+
 ## Important Things
 
 -   Python 3.11
