@@ -35,3 +35,19 @@ class PoliticalParty(BaseModel):
             )
 
         return super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = "political_party"
+        verbose_name = "Political Party"
+        verbose_name_plural = "Political Parties"
+        ordering = ["-created_at"]
+        # Adding the check constraint here - founded date must be strictly before dissolved date
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(founded_date__lt=models.F("dissolved_date"))
+                    | models.Q(dissolved_date__isnull=True)
+                ),
+                name="founded_date_before_dissolved_date_or_active",
+            )
+        ]
