@@ -17,12 +17,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
 from utils.core.constants import API_V1_PREFIX
 
-
+print(API_V1_PREFIX)
 urlpatterns = [
     # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
     # path('admin/', admin.site.urls),
     path(f"{API_V1_PREFIX}/political-parties/", include("apps.political_party.urls")),
+    path(f"{API_V1_PREFIX}/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(f"{API_V1_PREFIX}/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path(f"{API_V1_PREFIX}/docs/redoc", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
 ]
