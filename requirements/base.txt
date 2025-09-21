@@ -1,25 +1,47 @@
-# base.txt (Common dependencies for both dev and prod)
-
-# Python 3.11
-
-Django==5.1.5
-djangorestframework==3.15.2
-# djangorestframework-api-key==3.0.0
-python-decouple==3.8
-django-crontab==0.7.1
-Pillow==10.2.0
-# mysqlclient==2.2.0
-django-cors-headers==4.3.1
-django-safedelete==1.4.1
-djangorestframework_simplejwt==5.4.0
-# for postgres
-psycopg2-binary==2.9.10
-django-currentuser==0.9.0
-# misc
+amqp==5.3.1
+asgiref==3.9.1
+async-timeout==5.0.1
+attrs==25.3.0
+billiard==4.2.2
 celery==5.5.3
-redis==6.2.0
-django_celery_results==2.6.0
+click==8.3.0
+click-didyoumean==0.3.1
+click-plugins==1.1.1.2
+click-repl==0.3.0
+cron-descriptor==2.0.6
+django==5.1.5
 django-celery-beat==2.8.1
-
-# for sanitizing rich text
+django-celery-results==2.6.0
+django-cors-headers==4.3.1
+django-crontab==0.7.1
+django-currentuser==0.9.0
+django-extensions==4.1
+django-safedelete==1.4.1
+django-timezone-field==7.1
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.4.0
+drf-spectacular==0.28.0
+inflection==0.5.1
+jsonschema==4.25.1
+jsonschema-specifications==2025.9.1
+kombu==5.5.4
 nh3==0.3.0
+packaging==25.0
+pillow==10.2.0
+prompt-toolkit==3.0.52
+psycopg2-binary==2.9.10
+pyjwt==2.10.1
+python-crontab==3.3.0
+python-dateutil==2.9.0.post0
+python-decouple==3.8
+pyyaml==6.0.2
+redis==6.2.0
+referencing==0.36.2
+rpds-py==0.27.1
+six==1.17.0
+sqlparse==0.5.3
+typing-extensions==4.15.0
+tzdata==2025.2
+uritemplate==4.2.0
+vine==5.1.0
+wcwidth==0.2.13
