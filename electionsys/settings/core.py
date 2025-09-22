@@ -227,7 +227,6 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API for election candidates (OSNepal backend)",
     "VERSION": "1.0.0",
     "SCHEMA_PATH_PREFIX": "/api",
-    "SERVERS": [{"url": "http://localhost:8000", "description": "local"}],
 }
 
 LOGGING = {

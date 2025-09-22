@@ -39,7 +39,7 @@ class GetPoliticalPartyDetailAPI(PublicAPIView):
 
 # ---------- LIST ----------
 @extend_schema(
-    responses=GetPoliticalPartyDetailAPI.OutputSerializer(many=True)
+    responses=PoliticalPartyUtil.create_serializer
 )
 class GetPoliticalPartyListAPI(PublicAPIView):
     extra_permissions = []
@@ -54,8 +54,8 @@ class GetPoliticalPartyListAPI(PublicAPIView):
 
 # ---------- CREATE ----------
 @extend_schema(
-    request=GetPoliticalPartyDetailAPI.OutputSerializer,
-    responses=GetPoliticalPartyDetailAPI.OutputSerializer
+    request=PoliticalPartyUtil.create_serializer,
+    responses=PoliticalPartyUtil.create_serializer
 )
 class CreatePoliticalPartyAPI(PublicAPIView):
     extra_permissions = []
@@ -76,7 +76,7 @@ class CreatePoliticalPartyAPI(PublicAPIView):
 
 # ---------- UPDATE ----------
 @extend_schema(
-    request=GetPoliticalPartyDetailAPI.OutputSerializer,
+    request=PoliticalPartyUtil.create_serializer,
     responses=GetPoliticalPartyDetailAPI.OutputSerializer
 )
 class UpdatePoliticalPartyAPI(PublicAPIView):
