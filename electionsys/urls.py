@@ -24,7 +24,6 @@ from drf_spectacular.views import (
 )
 from utils.core.constants import API_V1_PREFIX
 
-print(API_V1_PREFIX)
 urlpatterns = [
     # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
     # path('admin/', admin.site.urls),
