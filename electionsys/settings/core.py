@@ -59,6 +59,7 @@ LOCAL_APPS = [
     "apps.core",
     "apps.users",
     "apps.political_party",
+    "apps.political_figure",
 ]
 
 THIRD_PARTY_APPS = [
