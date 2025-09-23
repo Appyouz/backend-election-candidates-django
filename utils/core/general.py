@@ -62,3 +62,19 @@ def check_and_generate_slug(
 def get_country_list():
     data = [{"code": c, "name": n} for c, n in countries]
     return data
+
+
+def update_model_instance(instance, **kwargs):
+    from django.core.exceptions import FieldError
+
+    # Validate that fields exist on the model
+    model_fields = {field.name for field in instance._meta.get_fields()}
+    for key in kwargs:
+        if key not in model_fields:
+            raise FieldError(
+                f"Field '{key}' does not exist on {instance.__class__.__name__}"
+            )
+    for key, value in kwargs.items():
+        setattr(instance, key, value)
+    instance.save()
+    return instance
