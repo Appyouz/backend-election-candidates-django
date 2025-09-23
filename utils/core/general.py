@@ -1,5 +1,7 @@
 import random
 import string
+
+from django_countries import countries
 from utils.core.exceptions import InternalApplicationError
 from django.utils.text import slugify
 
@@ -55,3 +57,8 @@ def check_and_generate_slug(
         slug = f"{trimmed_base}-{random_suffix}"
 
     return slug
+
+
+def get_country_list():
+    data = [{"code": c, "name": n} for c, n in countries]
+    return data

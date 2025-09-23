@@ -1,3 +1,23 @@
 from django.shortcuts import render
+from django_countries import countries
 
-# Create your views here.
+from utils.core.base_views import PublicAPIView
+from rest_framework import serializers
+
+from utils.core.general import get_country_list
+from utils.core.response_wrappers import OKResponse
+
+
+class GetCountryListAPI(PublicAPIView):
+
+    class OutputSerializer(serializers.Serializer):
+        code = serializers.CharField()
+        name = serializers.CharField()
+
+    output_serializer = OutputSerializer
+
+    def get(self, request):
+        data = get_country_list()
+
+        serializer = self.output_serializer(instance=data, many=True)
+        return OKResponse(data=serializer.data)

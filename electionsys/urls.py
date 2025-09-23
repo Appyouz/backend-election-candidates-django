@@ -25,4 +25,5 @@ urlpatterns = [
     # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
     # path('admin/', admin.site.urls),
     path(f"{API_V1_PREFIX}/political-parties/", include("apps.political_party.urls")),
+    path(f"{API_V1_PREFIX}/core/", include("apps.core.urls")),
 ]

@@ -23,3 +23,6 @@ django-celery-beat==2.8.1
 
 # for sanitizing rich text
 nh3==0.3.0
+
+# For country
+django-countries==7.6.1
