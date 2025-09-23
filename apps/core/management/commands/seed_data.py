@@ -1,5 +1,7 @@
 import json
 import os
+import secrets
+import string
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ValidationError
@@ -14,11 +16,15 @@ class Command(BaseCommand):
     """
     help = 'Seeds the database with initial data from a JSON file.'
 
+    def _generate_password(self):
+        """Generates a secure, random password."""
+        alphabet = string.ascii_letters + string.digits + string.punctuation
+        return ''.join(secrets.choice(alphabet) for _ in range(12))
+
     @transaction.atomic
     def handle(self, *args, **options):
-        # Define the JSON data file path
+        # Define the path to JSON data file
         file_path = os.path.join(settings.BASE_DIR, 'data', 'seed_data.json')
-
         self.stdout.write(f"Attempting to seed data from {file_path}...")
 
         try:
@@ -43,10 +49,15 @@ class Command(BaseCommand):
                     )
                     # Set password if the user was just created
                     if created:
-                        user.set_password("password123")
+                        # Use a randomly generated password
+                        generated_password = self._generate_password()
+                        user.set_password(generated_password)
                         user.save()
                         self.stdout.write(self.style.SUCCESS(
                             f"Successfully created user: {user.username}"
+                        ))
+                        self.stdout.write(self.style.WARNING(
+                            f"Generated password for '{user.username}': {generated_password}"
                         ))
                     else:
                         self.stdout.write(self.style.WARNING(
@@ -56,7 +67,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR(
                         f"Error processing user data: {user_data} - {e}"
                     ))
-
+            
             # Process Political Parties
             parties_data = data.get('political_parties', [])
             for party_data in parties_data:
@@ -82,7 +93,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR(
                         f"Error processing political party data: {party_data} - {e}"
                     ))
-
+            
             self.stdout.write(self.style.SUCCESS('Database seeding complete!'))
 
         except FileNotFoundError:
