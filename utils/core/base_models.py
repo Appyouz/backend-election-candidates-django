@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django_currentuser.middleware import get_current_authenticated_user
 from django.core.validators import MaxLengthValidator
+import uuid
 
 # Create your models here.
 
@@ -71,6 +72,11 @@ class BaseModel(SafeDeleteModel, TimeAuditModel, UserAuditModel):
     Inherits from SafeDeleteModel, TimeAuditModel and UserAuditModel
     Overrides save method to set created_by and updated_by using django_currentuser.middleware.get_current_authenticated_user
     """
+
+    # if we need to send id in public facing sites, send uuid instead of id
+    uuid = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, db_index=True
+    )
 
     _safedelete_policy = SOFT_DELETE_CASCADE
 

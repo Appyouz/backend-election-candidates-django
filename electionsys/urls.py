@@ -17,12 +17,20 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-
+from django.conf import settings
 from utils.core.constants import API_V1_PREFIX
+from django.conf.urls.static import static
 
 
 urlpatterns = [
     # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
     # path('admin/', admin.site.urls),
     path(f"{API_V1_PREFIX}/political-parties/", include("apps.political_party.urls")),
+    path(f"{API_V1_PREFIX}/core/", include("apps.core.urls")),
+    path(f"{API_V1_PREFIX}/political-figures/", include("apps.political_figure.urls")),
 ]
+
+if settings.DEBUG:
+    # In production, debug is False, and the below files will be served by nginx
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
