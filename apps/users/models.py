@@ -109,7 +109,7 @@ class User(AbstractBaseUser, BaseModel):
     objects = CustomBaseUserManager()
 
     class Meta:
-        db_table = "user"
+        db_table = "users_user"
         verbose_name = "User"
         verbose_name_plural = "Users"
         constraints = [
