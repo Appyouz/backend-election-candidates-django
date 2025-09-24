@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "username": "super.admin",
+      "email": "super.admin@example.com",
+      "first_name": "Super",
+      "last_name": "Admin",
+      "role": "SUPER",
+      "phone_number": "9800000000"
+    },
+    {
+      "username": "general.user",
+      "email": "general.user@example.com",
+      "first_name": "General",
+      "last_name": "User",
+      "role": "GENERAL",
+      "phone_number": "9800000001"
+    }
+  ],
+  "political_parties": [
+    {
+      "name": "Rastriya Prajatantra Party",
+      "description": "A monarchist political party in Nepal.",
+      "abbreviation": "RPP",
+      "founded_date": "1990-01-01",
+      "website": "https://rpp.org.np"
+    },
+    {
+      "name": "Nepali Congress",
+      "description": "A social-democratic political party in Nepal.",
+      "abbreviation": "NC",
+      "founded_date": "1950-04-09",
+      "website": "https://nepalicongress.org"
+    }
+  ]
+}
