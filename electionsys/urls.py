@@ -28,6 +28,7 @@ urlpatterns = [
     path(f"{API_V1_PREFIX}/political-parties/", include("apps.political_party.urls")),
     path(f"{API_V1_PREFIX}/core/", include("apps.core.urls")),
     path(f"{API_V1_PREFIX}/political-figures/", include("apps.political_figure.urls")),
+    path(f"{API_V1_PREFIX}/users/", include("apps.users.urls")),
 ]
 
 if settings.DEBUG:
