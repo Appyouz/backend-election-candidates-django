@@ -57,6 +57,11 @@ def get_config(debug: bool):
     return config
 
 
+def create_logs_dir_if_not_exists():
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+
+
 def check_all_okay():
 
     raise_if_debug_not_properly_set()
