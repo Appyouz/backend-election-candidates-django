@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
-from electionsys.utils import check_all_okay, get_config
+from electionsys.utils import check_all_okay, create_logs_dir_if_not_exists, get_config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Since this core.py file is under settings folder, we need to go one level up
@@ -59,6 +59,7 @@ LOCAL_APPS = [
     "apps.core",
     "apps.users",
     "apps.political_party",
+    "apps.political_figure",
 ]
 
 THIRD_PARTY_APPS = [
@@ -229,54 +230,59 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": "/api",
 }
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {pathname}:{lineno} {message}",  # Add pathname and lineno,
-            "style": "{",
+
+STORE_LOGS = config("DJANGO_STORE_LOGS", default=False, cast=bool)
+if STORE_LOGS:
+    create_logs_dir_if_not_exists()
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "verbose": {
+                "format": "{levelname} {asctime} {pathname}:{lineno} {message}",  # Add pathname and lineno,
+                "style": "{",
+            },
+            "simple": {
+                "format": "{levelname} {message}",
+                "style": "{",
+            },
         },
-        "simple": {
-            "format": "{levelname} {message}",
-            "style": "{",
+        "handlers": {
+            # NOTE: To avoid a log file becoming too large, use a RotatingFileHandler that will rotate the log file when it reaches a certain size.
+            "django_file_rotate": {
+                "level": "DEBUG",
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": os.path.join(BASE_DIR, "logs", "django_rotate.log"),
+                "maxBytes": 1024 * 1024 * 10,  # 10 MB
+                "backupCount": 3,  # 3 latest backup files
+                "formatter": "verbose",
+            },
+            "email_submission_handler": {
+                "level": "DEBUG",
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": os.path.join(BASE_DIR, "logs", "email_submission.log"),
+                "maxBytes": 1024 * 1024 * 5,  # 5 MB
+                "backupCount": 3,  # 3 latest backup files
+                "formatter": "verbose",
+            },
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+                "formatter": "simple",
+            },
         },
-    },
-    "handlers": {
-        # NOTE: To avoid a log file becoming too large, use a RotatingFileHandler that will rotate the log file when it reaches a certain size.
-        "django_file_rotate": {
-            "level": "DEBUG",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "django_rotate.log"),
-            "maxBytes": 1024 * 1024 * 10,  # 10 MB
-            "backupCount": 3,  # 3 latest backup files
-            "formatter": "verbose",
+        "loggers": {
+            "django": {
+                "handlers": ["console", "django_file_rotate"],
+                "level": "DEBUG",
+                "propagate": True,
+            },
+            # For future, when we need to send emails
+            "email_submission": {
+                "handlers": ["console", "email_submission_handler"],
+                "level": "DEBUG",
+                "propagate": False,
+            },
         },
-        "email_submission_handler": {
-            "level": "DEBUG",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "email_submission.log"),
-            "maxBytes": 1024 * 1024 * 5,  # 5 MB
-            "backupCount": 3,  # 3 latest backup files
-            "formatter": "verbose",
-        },
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console", "django_file_rotate"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-        # For future, when we need to send emails
-        "email_submission": {
-            "handlers": ["console", "email_submission_handler"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-    },
-}
+    }

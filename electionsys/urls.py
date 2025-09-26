@@ -22,7 +22,9 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
     SpectacularRedocView,
 )
+from django.conf import settings
 from utils.core.constants import API_V1_PREFIX
+from django.conf.urls.static import static
 
 urlpatterns = [
     # NOTE: We'll have our own dashboard in NextJS, so don't use django admin
@@ -31,4 +33,11 @@ urlpatterns = [
     path(f"{API_V1_PREFIX}/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(f"{API_V1_PREFIX}/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path(f"{API_V1_PREFIX}/docs/redoc", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path(f"{API_V1_PREFIX}/core/", include("apps.core.urls")),
+    path(f"{API_V1_PREFIX}/political-figures/", include("apps.political_figure.urls")),
 ]
+
+if settings.DEBUG:
+    # In production, debug is False, and the below files will be served by nginx
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
