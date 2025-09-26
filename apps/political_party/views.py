@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from apps.political_party.models import PoliticalParty
@@ -7,7 +8,13 @@ from utils.political_party.core import PoliticalPartyUtil
 
 
 # ---------- DETAIL ----------
+
+
 class GetPoliticalPartyDetailAPI(PublicAPIView):
+    """
+    Get political party detail
+    """
+
     extra_permissions = []
 
     class OutputSerializer(serializers.ModelSerializer):
@@ -25,9 +32,12 @@ class GetPoliticalPartyDetailAPI(PublicAPIView):
                 "website",
                 "logo_url",
             ]
+            # required by drf spectacular if we need to use same name (OutputSerializer) for different serializers
+            ref_name = "PoliticalPartyDetailSerializer"
 
     output_serializer = OutputSerializer
 
+    @extend_schema(responses=output_serializer)
     def get(self, request, pk):
         party = get_object_or_404(PoliticalParty, pk=pk)
         serializer = self.output_serializer(instance=party)
@@ -36,10 +46,15 @@ class GetPoliticalPartyDetailAPI(PublicAPIView):
 
 # ---------- LIST ----------
 class GetPoliticalPartyListAPI(PublicAPIView):
+    """
+    Get political party list
+    """
+
     extra_permissions = []
 
     output_serializer = GetPoliticalPartyDetailAPI.OutputSerializer
 
+    @extend_schema(responses=output_serializer(many=True))
     def get(self, request):
         parties = PoliticalParty.objects.all().order_by("-created_at")
         serializer = self.output_serializer(parties, many=True)
@@ -47,11 +62,21 @@ class GetPoliticalPartyListAPI(PublicAPIView):
 
 
 # ---------- CREATE ----------
+
+
 class CreatePoliticalPartyAPI(PublicAPIView):
+    """
+    Create political party
+    """
+
     extra_permissions = []
 
     output_serializer = GetPoliticalPartyDetailAPI.OutputSerializer
 
+    @extend_schema(
+        request=PoliticalPartyUtil.create_serializer,
+        responses=output_serializer,
+    )
     def post(self, request):
         data = request.data
         political_party = PoliticalPartyUtil.create_political_party(data)
@@ -65,12 +90,22 @@ class CreatePoliticalPartyAPI(PublicAPIView):
 
 
 # ---------- UPDATE ----------
+
+
 class UpdatePoliticalPartyAPI(PublicAPIView):
+    """
+    Update political party
+    """
+
     extra_permissions = []
 
     output_serializer = GetPoliticalPartyDetailAPI.OutputSerializer
 
-    def put(self, request, pk):
+    @extend_schema(
+        request=PoliticalPartyUtil.update_serializer,
+        responses=output_serializer,
+    )
+    def patch(self, request, pk):
         political_party = get_object_or_404(PoliticalParty, pk=pk)
 
         data = request.data
@@ -87,8 +122,13 @@ class UpdatePoliticalPartyAPI(PublicAPIView):
 
 # ---------- DELETE ----------
 class DeletePoliticalPartyAPI(PublicAPIView):
+    """
+    Delete political party
+    """
+
     extra_permissions = []
 
+    @extend_schema(responses=None)
     def delete(self, request, pk):
         political_party = get_object_or_404(PoliticalParty, pk=pk)
 
