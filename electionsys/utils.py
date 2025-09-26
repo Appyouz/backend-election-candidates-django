@@ -25,6 +25,14 @@ def raise_if_debug_not_properly_set():
         )
 
 
+def get_debug_from_env_var():
+    raise_if_debug_not_properly_set()
+    debug_str = os.environ.get("DJANGO_DEBUG")
+    # we can be sure that debug_str is "True" or "False" cause raise_if_debug_not_properly_set() validates that as well
+    debug = True if debug_str == "True" else False
+    return debug
+
+
 def raise_if_env_not_found(debug: bool):
     """
     Raise FileNotFoundError if .env file does not exist.
@@ -65,7 +73,5 @@ def create_logs_dir_if_not_exists():
 def check_all_okay():
 
     raise_if_debug_not_properly_set()
-    debug_str = os.environ.get("DJANGO_DEBUG")
-    # we can be sure that debug_str is "True" or "False" cause raise_if_debug_not_properly_set() validates that as well
-    debug = True if debug_str == "True" else False
-    raise_if_env_not_found(debug=debug)
+
+    raise_if_env_not_found(debug=get_debug_from_env_var())

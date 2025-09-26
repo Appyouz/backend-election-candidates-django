@@ -14,7 +14,12 @@ import os
 from pathlib import Path
 
 from datetime import timedelta
-from electionsys.utils import check_all_okay, create_logs_dir_if_not_exists, get_config
+from electionsys.utils import (
+    check_all_okay,
+    create_logs_dir_if_not_exists,
+    get_config,
+    get_debug_from_env_var,
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Since this core.py file is under settings folder, we need to go one level up
@@ -25,7 +30,8 @@ check_all_okay()
 # SECURITY WARNING: don't run with debug turned on in production!
 # Temporarily use os.environ.get("DJANGO_DEBUG") to get the DJANGO_DEBUG value, according to that, we'll later use .env or .env.prod with python decouple
 # NOTE: We can be sure that DJANGO_DEBUG is set cause check_all_okay() verifies that
-DEBUG = os.environ.get("DJANGO_DEBUG")
+
+DEBUG = get_debug_from_env_var()
 # Print in green color
 print("\033[92m---------DEBUG: {} is used---------\033[0m".format(DEBUG))
 
@@ -74,6 +80,7 @@ THIRD_PARTY_APPS = [
 ]
 
 if DEBUG:
+    print(type(DEBUG), DEBUG, "DEBUG is True, but how")
     THIRD_PARTY_APPS.append("django_extensions")
 
 INSTALLED_APPS = DJANGO_DEFAULT_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -215,30 +222,27 @@ REST_FRAMEWORK = {
         "utils.core.permissions.IsSuper",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",        
+        "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "EXCEPTION_HANDLER": "utils.core.exception_handler.custom_exception_handler",
-    "DEFAULT_SCHEMA_CLASS": 'drf_spectacular.openapi.AutoSchema'
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN': True,
-    
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    
-    'TOKEN_OBTAIN_SERIALIZER': 'apps.users.serializers.CustomTokenObtainPairSerializer',
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": None,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "TOKEN_OBTAIN_SERIALIZER": "apps.users.serializers.CustomTokenObtainPairSerializer",
 }
 
 # This is needed if we need to send file's url from the backend
