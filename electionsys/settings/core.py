@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = [
     "safedelete",
     "django_celery_results",
     "django_celery_beat",
+    "drf_spectacular",
 ]
 
 if DEBUG:
@@ -216,10 +217,19 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ),
     "EXCEPTION_HANDLER": "utils.core.exception_handler.custom_exception_handler",
+    "DEFAULT_SCHEMA_CLASS": 'drf_spectacular.openapi.AutoSchema'
 }
 
 # This is needed if we need to send file's url from the backend
 BACKEND_MEDIA_DOMAIN = config("DJANGO_BACKEND_MEDIA_DOMAIN")
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "ElectionSys API",
+    "DESCRIPTION": "API for election candidates (OSNepal backend)",
+    "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": "/api",
+}
+
 
 STORE_LOGS = config("DJANGO_STORE_LOGS", default=False, cast=bool)
 if STORE_LOGS:

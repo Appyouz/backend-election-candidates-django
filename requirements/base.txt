@@ -26,3 +26,6 @@ nh3==0.3.0
 
 # For country
 django-countries==7.6.1
+
+# docs
+drf-spectacular==0.28.0

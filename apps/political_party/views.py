@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from apps.political_party.models import PoliticalParty
@@ -7,6 +8,7 @@ from utils.political_party.core import PoliticalPartyUtil
 
 
 # ---------- DETAIL ----------
+
 class GetPoliticalPartyDetailAPI(PublicAPIView):
     extra_permissions = []
 
@@ -28,6 +30,7 @@ class GetPoliticalPartyDetailAPI(PublicAPIView):
 
     output_serializer = OutputSerializer
 
+    @extend_schema(responses=OutputSerializer)
     def get(self, request, pk):
         party = get_object_or_404(PoliticalParty, pk=pk)
         serializer = self.output_serializer(instance=party)
@@ -35,6 +38,9 @@ class GetPoliticalPartyDetailAPI(PublicAPIView):
 
 
 # ---------- LIST ----------
+@extend_schema(
+    responses=PoliticalPartyUtil.create_serializer
+)
 class GetPoliticalPartyListAPI(PublicAPIView):
     extra_permissions = []
 
@@ -47,6 +53,10 @@ class GetPoliticalPartyListAPI(PublicAPIView):
 
 
 # ---------- CREATE ----------
+@extend_schema(
+    request=PoliticalPartyUtil.create_serializer,
+    responses=PoliticalPartyUtil.create_serializer
+)
 class CreatePoliticalPartyAPI(PublicAPIView):
     extra_permissions = []
 
@@ -65,6 +75,10 @@ class CreatePoliticalPartyAPI(PublicAPIView):
 
 
 # ---------- UPDATE ----------
+@extend_schema(
+    request=PoliticalPartyUtil.create_serializer,
+    responses=GetPoliticalPartyDetailAPI.OutputSerializer
+)
 class UpdatePoliticalPartyAPI(PublicAPIView):
     extra_permissions = []
 
@@ -86,6 +100,7 @@ class UpdatePoliticalPartyAPI(PublicAPIView):
 
 
 # ---------- DELETE ----------
+@extend_schema(responses=None)
 class DeletePoliticalPartyAPI(PublicAPIView):
     extra_permissions = []
 
