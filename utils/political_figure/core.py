@@ -22,7 +22,6 @@ class PoliticalFigureUtil:
         """
         Creates and returns political figure.
         """
-        print(data)
         serializer = PoliticalFigureUtil.create_serializer(data=data)
 
         # serializer's ValidationError is automatically handled in exception handler
