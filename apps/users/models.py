@@ -8,7 +8,6 @@ from utils.core.base_models import BaseModel
 from safedelete.managers import SafeDeleteManager
 from utils.core.validation import nepal_phone_number_validator
 
-
 class CustomBaseUserManager(BaseUserManager, SafeDeleteManager):
     """
     Custom user manager that handles user creation and inherits SafeDeleteManager
@@ -90,7 +89,8 @@ class User(AbstractBaseUser, BaseModel):
     password = models.CharField(_("password"), max_length=128)
     last_login = models.DateTimeField(_("last login"), blank=True, null=True)
 
-    role = models.CharField(max_length=20, default=Roles.GENERAL, choices=Roles.choices)
+    # FIX: Change from CharField to IntegerField for IntegerChoices
+    role = models.IntegerField(choices=Roles.choices, default=Roles.GENERAL)
 
     # Timestamps
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
@@ -101,9 +101,7 @@ class User(AbstractBaseUser, BaseModel):
 
     # Authentication configuration
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = [
-        "email"
-    ]  # Fields required when creating superuser via createsuperuser command
+    REQUIRED_FIELDS = ["email"]
 
     # Custom manager
     objects = CustomBaseUserManager()
@@ -180,7 +178,6 @@ class User(AbstractBaseUser, BaseModel):
         """Check if user has fact checker role"""
         return self.role == self.Roles.FACT_CHECKER
 
-    # You can implement your own permission methods here
     def has_admin_access(self):
         """Check if user can access admin interface"""
         return self.is_active and self.role in [self.Roles.SUPER, self.Roles.ADMIN]
@@ -199,3 +196,7 @@ class User(AbstractBaseUser, BaseModel):
     def is_superuser(self):
         """Property for Django admin compatibility"""
         return self.is_active and self.role == self.Roles.SUPER
+
+    def get_role_display(self):
+        """Get the display value for the role"""
+        return self.Roles(self.role).label
