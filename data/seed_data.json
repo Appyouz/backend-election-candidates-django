@@ -5,7 +5,7 @@
       "email": "super.admin@example.com",
       "first_name": "Super",
       "last_name": "Admin",
-      "role": "SUPER",
+      "role": 1,
       "phone_number": "9800000000"
     },
     {
@@ -13,7 +13,7 @@
       "email": "general.user@example.com",
       "first_name": "General",
       "last_name": "User",
-      "role": "GENERAL",
+      "role": 3,
       "phone_number": "9800000001"
     }
   ],
@@ -23,14 +23,228 @@
       "description": "A monarchist political party in Nepal.",
       "abbreviation": "RPP",
       "founded_date": "1990-01-01",
-      "website": "https://rpp.org.np"
+      "ideology": "Monarchism",
+      "hq_location": "Kathmandu",
+      "logo_url": "https://example.com/rpp-logo.png",
+      "website": "https://rpp.org.np",
+      "political_figures": [
+        {
+          "full_name": "Amara Singh",
+          "date_of_birth": "1980-04-15",
+          "gender": "f",
+          "biography": "Experienced political figure and social activist.",
+          "photo": null,
+          "home_address": {
+            "street_address": "12 Gandhi Street",
+            "street_address_2": "Suite 3",
+            "city": "Mumbai",
+            "region": "Maharashtra",
+            "postal_code": "400001",
+            "country": "NP",
+            "latitude": 19.076,
+            "longitude": 72.8777
+          },
+          "current_address": {
+            "street_address": "45 Nehru Avenue",
+            "street_address_2": "",
+            "city": "Delhi",
+            "region": "Delhi NCR",
+            "postal_code": "110001",
+            "country": "NP",
+            "latitude": 28.6139,
+            "longitude": 77.209
+          },
+          "political_party": 1,
+          "contact_number": "9800000000",
+          "website": "https://amarasingh.in",
+          "facebook_url": "https://facebook.com/amara.singh",
+          "twitter_url": "https://twitter.com/amara_singh",
+          "instagram_url": "https://instagram.com/amara.singh",
+          "is_active": true
+        },
+        {
+          "full_name": "David Owusu",
+          "date_of_birth": "1975-09-10",
+          "gender": "m",
+          "biography": "Member of Parliament for over a decade.",
+          "photo": null,
+          "home_address": {
+            "street_address": "78 Liberation Road",
+            "street_address_2": "",
+            "city": "Accra",
+            "region": "Greater Accra",
+            "postal_code": "00233",
+            "country": "NP",
+            "latitude": 5.6037,
+            "longitude": -0.187
+          },
+          "current_address": {
+            "street_address": "22 Parliament Heights",
+            "street_address_2": "Apt 5B",
+            "city": "Accra",
+            "region": "",
+            "postal_code": "",
+            "country": "NP",
+            "latitude": 5.56,
+            "longitude": -0.205
+          },
+          "political_party": null,
+          "contact_number": "9800000000",
+          "website": "",
+          "facebook_url": "",
+          "twitter_url": "",
+          "instagram_url": "",
+          "is_active": true
+        },
+        {
+          "full_name": "Lucía González",
+          "date_of_birth": "1990-12-05",
+          "gender": "f",
+          "biography": "",
+          "photo": null,
+          "home_address": {
+            "street_address": "123 Avenida Libertad",
+            "street_address_2": "",
+            "city": "Buenos Aires",
+            "region": "CABA",
+            "postal_code": "C1000",
+            "country": "NP",
+            "latitude": -34.6037,
+            "longitude": -58.3816
+          },
+          "current_address": {
+            "street_address": "456 Calle Independencia",
+            "street_address_2": "",
+            "city": "Rosario",
+            "region": "Santa Fe",
+            "postal_code": "S2000",
+            "country": "NP",
+            "latitude": -32.9468,
+            "longitude": -60.6393
+          },
+          "political_party": 2,
+          "contact_number": "9800000000",
+          "website": "https://lucia-politica.ar",
+          "facebook_url": "https://facebook.com/lucia.g",
+          "twitter_url": "https://twitter.com/lucia_g",
+          "instagram_url": "https://instagram.com/lucia.gonzalez",
+          "is_active": true
+        }
+      ]
     },
     {
       "name": "Nepali Congress",
       "description": "A social-democratic political party in Nepal.",
       "abbreviation": "NC",
       "founded_date": "1950-04-09",
-      "website": "https://nepalicongress.org"
+      "ideology": "Social Democracy",
+      "hq_location": "Kathmandu",
+      "logo_url": "https://example.com/nc-logo.png",
+      "website": "https://nepalicongress.org",
+      "political_figures": [
+        {
+          "full_name": "Ravi Sharma",
+          "date_of_birth": "1985-07-21",
+          "gender": "m",
+          "biography": "Youth leader with focus on education reform.",
+          "photo": null,
+          "home_address": {
+            "street_address": "10 Lotus Lane",
+            "street_address_2": "Block A",
+            "city": "Chandigarh",
+            "region": "",
+            "postal_code": "160017",
+            "country": "NP",
+            "latitude": 30.7333,
+            "longitude": 76.7794
+          },
+          "current_address": {
+            "street_address": "55 Harmony Towers",
+            "street_address_2": "Floor 5",
+            "city": "Pune",
+            "region": "Maharashtra",
+            "postal_code": "411001",
+            "country": "NP",
+            "latitude": 18.5204,
+            "longitude": 73.8567
+          },
+          "political_party": 3,
+          "contact_number": "9800000000",
+          "website": "https://ravisharma.in",
+          "facebook_url": "",
+          "twitter_url": "",
+          "instagram_url": "",
+          "is_active": true
+        },
+        {
+          "full_name": "Amina Yusuf",
+          "date_of_birth": "1972-02-10",
+          "gender": "f",
+          "biography": "Environmental advocate and independent candidate.",
+          "photo": null,
+          "home_address": {
+            "street_address": "Plot 34 Unity Street",
+            "street_address_2": "",
+            "city": "Lagos",
+            "region": "Lagos State",
+            "postal_code": "100001",
+            "country": "NP",
+            "latitude": 6.5244,
+            "longitude": 3.3792
+          },
+          "current_address": {
+            "street_address": "Green Estate, Block 12",
+            "street_address_2": "Unit 2B",
+            "city": "Abuja",
+            "region": "FCT",
+            "postal_code": "900001",
+            "country": "NP",
+            "latitude": 9.0579,
+            "longitude": 7.4951
+          },
+          "political_party": null,
+          "contact_number": "9800000000",
+          "website": "",
+          "facebook_url": "https://facebook.com/amina.yusuf",
+          "twitter_url": "",
+          "instagram_url": "https://instagram.com/amina.yusuf",
+          "is_active": true
+        },
+        {
+          "full_name": "Jean Dupont",
+          "date_of_birth": "1960-11-03",
+          "gender": "m",
+          "biography": "",
+          "photo": null,
+          "home_address": {
+            "street_address": "8 Rue de la République",
+            "street_address_2": "",
+            "city": "Lyon",
+            "region": "Auvergne-Rhône-Alpes",
+            "postal_code": "69001",
+            "country": "NP",
+            "latitude": 45.7640,
+            "longitude": 4.8357
+          },
+          "current_address": {
+            "street_address": "32 Avenue des Champs-Élysées",
+            "street_address_2": "",
+            "city": "Paris",
+            "region": "",
+            "postal_code": "75008",
+            "country": "NP",
+            "latitude": 48.8566,
+            "longitude": 2.3522
+          },
+          "political_party": 5,
+          "contact_number": "9800000000",
+          "website": "https://jeandupont.fr",
+          "facebook_url": "",
+          "twitter_url": "",
+          "instagram_url": "",
+          "is_active": true
+        }
+      ]
     }
   ]
 }
