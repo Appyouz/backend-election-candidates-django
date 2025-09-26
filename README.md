@@ -12,7 +12,8 @@ Below guides are used whenever possible. PS: they are useful for any django proj
 
 -   Run: `scripts/setup.sh --env <dev|prod> --python_alias <python_command>`
 -   Example: `scripts/setup.sh --env dev --python_alias python`
--   To create a superuser: `python manage.py createsuperuser`
+-   To create a superuser (with `.venv` activated): `python manage.py createsuperuser`
+-   To setup server (with `.venv` activated): `python manage.py setup_server`
 
 ## Important Things
 
