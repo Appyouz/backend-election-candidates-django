@@ -84,7 +84,7 @@ class UpdatePoliticalPartyAPI(PublicAPIView):
 
     output_serializer = GetPoliticalPartyDetailAPI.OutputSerializer
 
-    def put(self, request, pk):
+    def patch(self, request, pk):
         political_party = get_object_or_404(PoliticalParty, pk=pk)
 
         data = request.data
