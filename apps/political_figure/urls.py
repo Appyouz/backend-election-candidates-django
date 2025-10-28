@@ -1,5 +1,13 @@
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+router.register(
+    r'achievements', 
+    views.AchievementViewSet, 
+    basename='achievement'
+)
 
 urlpatterns = [
     # Political Party
@@ -28,4 +36,5 @@ urlpatterns = [
         views.DeletePoliticalFigureAPI.as_view(),
         name="delete-political-party",
     ),
+    path("", include(router.urls)), 
 ]

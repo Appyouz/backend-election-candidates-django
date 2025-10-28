@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from apps.core.models import Address
 from apps.core.serializers import CreateAddressSerializer, UpdateAddressSerializer
-from apps.political_figure.models import PoliticalFigure
-
+from .models.core import PoliticalFigure
+from .models.achievements import Achievement
 
 class CreatePoliticalFigureSerializer(serializers.ModelSerializer):
 
@@ -77,3 +77,44 @@ class UpdatePoliticalFigureSerializer(serializers.ModelSerializer):
             "instagram_url",
             "is_active",
         ]
+
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Achievement model. Handles input validation and output formatting.
+    """
+    # Read-only field for displaying the figure's full name
+    political_figure_full_name = serializers.CharField(
+        source='political_figure.full_name', 
+        read_only=True
+    )
+    
+    class Meta:
+        model = Achievement
+        fields = [
+            'id', 
+            'uuid', 
+            'political_figure', 
+            'political_figure_full_name',
+            'title', 
+            'category', 
+            'description', 
+            'year', 
+            'awarding_body', 
+            'evidence_link', 
+            'status',
+            'created_at',
+            'updated_at',
+        ]
+        read_only_fields = ['id', 'uuid', 'political_figure_full_name', 'created_at', 'updated_at'] 
+        
+    def validate_year(self, value):
+        """
+        Serializer-level validation to prevent future dates.
+        The model validator handles the 4-digit format.
+        """
+        import datetime
+        if value > datetime.date.today().year:
+            raise serializers.ValidationError("Achievement year cannot be in the future.")
+        return value

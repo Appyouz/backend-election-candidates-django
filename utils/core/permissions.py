@@ -44,3 +44,21 @@ class IsMember(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return request.user.role == User.Roles.MEMBER
+
+
+class IsAdminOrSuper(permissions.BasePermission):
+    """
+    Allows access only to Super or Admin roles.
+    """
+
+    message = "You are not authorized to perform this action (Requires Admin or Super role)."
+
+    def has_permission(self, request, view):
+        user = request.user
+        if not user or not user.is_authenticated:
+            return False
+        
+        return user.role in [User.Roles.SUPER, User.Roles.ADMIN]
+
+    def has_object_permission(self, request, view, obj):
+        return self.has_permission(request, view)
